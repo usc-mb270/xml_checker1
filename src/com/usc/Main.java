@@ -18,28 +18,35 @@ import java.util.Stack;
 
 public class Main {
 
+    File folder = new File("src/T1_test_cases");
+    File[] files = folder.listFiles();
 
+    public static void main(String[] args) {
+        final String xmlFilePath = "src/T1_test_cases/True_1.xml";
 
-    public static void main(String[] args)
-    {
-        final String xmlFilePath = "employees.xml";
+        boolean isRight = isHTMLMatched(xmlFilePath);
+
+        if (isRight == true) {
+            System.out.println("Good");
+        } else {
+            System.out.println("Bad");
+        }
 
         //Use method to convert XML string content to XML Document object
-        Document xmlDocument = convertXMLFileToXMLDocument( xmlFilePath );
+        //Document xmlDocument = convertXMLFileToXMLDocument( xmlFilePath );
 
         //Write to file or print XML
-        writeXmlDocumentToXmlFile(xmlDocument, "newEmployees.xml");
+        //writeXmlDocumentToXmlFile(xmlDocument, "newEmployees.xml");
     }
 
-    private static Document convertXMLFileToXMLDocument(String filePath)
-    {
+    private static Document convertXMLFileToXMLDocument(String filePath) {
         //Parser that produces DOM object trees from XML content
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
         //API to obtain DOM Document instance
         DocumentBuilder builder = null;
-        try
-        {
+
+        try {
             //Create DocumentBuilder with default configuration
             builder = factory.newDocumentBuilder();
 
@@ -48,10 +55,11 @@ public class Main {
 
             return xmlDocument;
         }
-        catch (Exception e)
-        {
+
+        catch (Exception e) {
             e.printStackTrace();
         }
+
         return null;
     }
 
@@ -74,6 +82,7 @@ public class Main {
             FileOutputStream outStream = new FileOutputStream(new File(fileName));
             transformer.transform(new DOMSource(xmlDocument), new StreamResult(outStream));
         }
+
         catch (TransformerException e) {
             e.printStackTrace();
         }
@@ -111,6 +120,4 @@ public class Main {
 
         return buffer.isEmpty();
     }
-
-
 }
